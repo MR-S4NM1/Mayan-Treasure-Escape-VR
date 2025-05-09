@@ -23,9 +23,15 @@ public class GameManager : MonoBehaviour
     [Header("Finite States Machine")]
     [SerializeField] protected GeneralGameStates _state;
 
+    [Header("Timer")]
+    [SerializeField] protected float _timer;
+    protected Coroutine _timerCoroutine;
+
     private void Awake()
     {
         if (instance == null) instance = this;
+        _timer = 950.0f;
+        _timerCoroutine = StartCoroutine(GameTimer());
     }
 
     protected void ChangeState(GeneralGameStates p_state)
@@ -58,6 +64,18 @@ public class GameManager : MonoBehaviour
         {
             _state = GeneralGameStates.GAME;
             Time.timeScale = 1.0f;
+        }
+    }
+
+    protected IEnumerator GameTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+
+        while (_timer > 0.0f)
+        {
+            //UIManager.instance.UpdateTimer(_timer.ToString());
+            yield return new WaitForSeconds(1.0f);
+            _timer--;
         }
     }
 }
