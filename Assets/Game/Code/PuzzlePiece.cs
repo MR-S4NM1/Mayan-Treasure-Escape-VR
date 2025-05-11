@@ -1,22 +1,51 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PuzzlePiece : MonoBehaviour
 {
-    private XRGrabInteractable grab;
-    public int index; 
+    public Vector2Int gridPos; 
 
-    private void Awake()
+    private XRBaseInteractable interactable;
+
+    private void Start()
     {
-        grab = GetComponent<XRGrabInteractable>();
-        grab.selectExited.AddListener(OnRelease);
+        interactable = GetComponent<XRBaseInteractable>();
+        if (interactable != null)
+        {
+            interactable.selectEntered.AddListener(OnSelected);
+
+        }
+
+    
+        PuzzleManager.Instance.grid[gridPos.x, gridPos.y] = this;
+
+        transform.position = new Vector3(gridPos.x, 0, -gridPos.y);
     }
 
-    void OnRelease(SelectExitEventArgs args)
+    private void OnSelected(SelectEnterEventArgs args)
     {
-        if (PuzzleManager.Instance.CanMoveToEmpty(transform.position))
+        PuzzleManager.Instance.MoveTile(this);
+    }
+
+    public void MoveTo(Vector3 targetPosition)
+    {
+        StartCoroutine(MoveSmoothly(targetPosition));
+    }
+
+    private IEnumerator MoveSmoothly(Vector3 target)
+    {
+        float duration = 0.2f;
+        float time = 0;
+        Vector3 start = transform.position;
+
+        while (time < duration)
         {
-            PuzzleManager.Instance.MoveToEmpty(transform);
+            transform.position = Vector3.Lerp(start, target, time / duration);
+            time += Time.deltaTime;
+            yield return null;
         }
+
+        transform.position = target;
     }
 }

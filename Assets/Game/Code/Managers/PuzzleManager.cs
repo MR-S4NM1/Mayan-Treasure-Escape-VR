@@ -1,22 +1,56 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public Transform[] cellPositions;
-    public Transform emptySlot;
+    public static PuzzleManager Instance;
 
-    public float snapDistance = 0.3f;
+    public PuzzlePiece[,] grid = new PuzzlePiece[3, 3];
+    public Vector2Int emptyTilePos = new Vector2Int(2, 2); 
 
-    public void TryMovePiece(Transform piece)
+    private void Awake()
     {
-        float distance = Vector3.Distance(piece.position, emptySlot.position);
-
-        if (distance < snapDistance)
+        if (Instance == null)
         {
-            Vector3 tempPosition = piece.position;
-            piece.position = emptySlot.position;
-            emptySlot.position = tempPosition;
+            Instance = this;
         }
+
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool IsAdjacent(Vector2Int pos)
+    {
+        int dirX = Mathf.Abs(pos.x - emptyTilePos.x);
+        int dy = Mathf.Abs(pos.y - emptyTilePos.y);
+        return (dirX + dy) == 1;
+    }
+
+    public void MoveTile(PuzzlePiece tile)
+    {
+        Vector2Int tilePos = tile.gridPos;
+        if (!IsAdjacent(tilePos))
+        {
+            return;
+        }
+
+        grid[emptyTilePos.x, emptyTilePos.y] = tile;
+        grid[tilePos.x, tilePos.y] = null;
+
+       
+        Vector3 targetPos = GetWorldPosition(emptyTilePos);
+        tile.MoveTo(targetPos);
+
+     
+        tile.gridPos = emptyTilePos;
+        emptyTilePos = tilePos;
+    }
+
+    public Vector3 GetWorldPosition(Vector2Int gridPos)
+    {
+        
+        return new Vector3(gridPos.x, 0, -gridPos.y);
     }
 }
