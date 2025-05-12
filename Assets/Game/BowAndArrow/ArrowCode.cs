@@ -32,6 +32,11 @@ public class ArrowCode : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (_hasHit) return;
+
+        if (other.CompareTag("BowTarget"))
+        {
+            GameManager.instance.DeleteTotems(other.gameObject);
+        }
         
         _hasHit = true;
         print($"Has hit: {_hasHit}");

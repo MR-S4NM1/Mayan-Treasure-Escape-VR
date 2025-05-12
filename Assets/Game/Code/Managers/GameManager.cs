@@ -27,12 +27,55 @@ public class GameManager : MonoBehaviour
     [SerializeField] protected float _timer;
     protected Coroutine _timerCoroutine;
 
+    [Header("BowAndArrowPuzzle")]
+    [SerializeField] protected HashSet<GameObject> _totemsDestroyed;
+    [SerializeField] protected GameObject _brigde;
+
+    #region UnityMethods
     private void Awake()
     {
         if (instance == null) instance = this;
         _timer = 950.0f;
         _timerCoroutine = StartCoroutine(GameTimer());
+        _totemsDestroyed = new HashSet<GameObject>();
+        _brigde.SetActive(true);
+        _brigde.GetComponent<Rigidbody>().useGravity = false;
     }
+
+    #endregion
+
+    #region PublicMethods
+    public void PauseOrResumeGame(bool p_pauseBool)
+    {
+        if (p_pauseBool)
+        {
+            _state = GeneralGameStates.PAUSE;
+            Time.timeScale = 0.0f;
+        }
+        else
+        {
+            _state = GeneralGameStates.GAME;
+            Time.timeScale = 1.0f;
+        }
+    }
+
+    public void DeleteTotems(GameObject p_totemGO)
+    {
+        if (!_totemsDestroyed.Contains(p_totemGO))
+        {
+            _totemsDestroyed.Add(p_totemGO);
+            p_totemGO.SetActive(false);
+        }
+
+        if (_totemsDestroyed.Count >= 2)
+        {
+            _brigde.GetComponent<Rigidbody>().useGravity = true;
+        }
+    }
+
+    #endregion
+
+    #region LocalMethods
 
     protected void ChangeState(GeneralGameStates p_state)
     {
@@ -53,20 +96,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PauseOrResumeGame(bool p_pauseBool)
-    {
-        if (p_pauseBool)
-        {
-            _state = GeneralGameStates.PAUSE;
-            Time.timeScale = 0.0f;
-        }
-        else
-        {
-            _state = GeneralGameStates.GAME;
-            Time.timeScale = 1.0f;
-        }
-    }
+    #endregion
 
+    #region Coroutines
     protected IEnumerator GameTimer()
     {
         yield return new WaitForSeconds(5.0f);
@@ -78,4 +110,5 @@ public class GameManager : MonoBehaviour
             _timer--;
         }
     }
+    #endregion
 }
