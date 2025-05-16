@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] protected HashSet<GameObject> _totemsDestroyed;
     [SerializeField] protected GameObject _brigde;
 
+    [Header("Doors")]
+    [SerializeField] protected GameObject[] _doors;
+
     #region UnityMethods
     private void Awake()
     {
@@ -40,6 +44,11 @@ public class GameManager : MonoBehaviour
         _totemsDestroyed = new HashSet<GameObject>();
         _brigde.SetActive(true);
         _brigde.GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    private void Start()
+    {
+        OpenDoor(0);
     }
 
     #endregion
@@ -71,6 +80,11 @@ public class GameManager : MonoBehaviour
         {
             _brigde.GetComponent<Rigidbody>().useGravity = true;
         }
+    }
+
+    public void OpenDoor(int p_index)
+    {
+        StartCoroutine(OpenDoorCorroutine(p_index));
     }
 
     #endregion
@@ -110,5 +124,23 @@ public class GameManager : MonoBehaviour
             _timer--;
         }
     }
+
+    #region Coroutines
+
+    protected IEnumerator OpenDoorCorroutine(int p_index)
+    {
+        Debug.Log($"Index: {p_index}");
+
+        _doors[p_index].gameObject.GetComponent<Animator>()?.Play("OpenDoor");
+
+        yield return new WaitForSeconds(2.0f);
+
+        if (_doors[p_index].gameObject.GetComponent<Animator>() != null)
+        {
+            _doors[p_index].gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
+    }
+    #endregion
+
     #endregion
 }
