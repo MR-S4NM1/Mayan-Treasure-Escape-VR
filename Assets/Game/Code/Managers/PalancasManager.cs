@@ -15,8 +15,12 @@ public class PalancasManager : MonoBehaviour
     [SerializeField] Vector2 _destinoJoystick_1, _destinoJoystick_2, _destinoJoystick_3;
     [SerializeField] bool Joy1, Joy2, Joy3;
 
+    protected HashSet<XRJoystick> _completejoysticks;
+
     void Start()
     {
+        _completejoysticks = new HashSet<XRJoystick>();
+
         prefabCompletoJoystick_1[1].SetActive(false);
         prefabCompletoJoystick_2[1].SetActive(false);
         prefabCompletoJoystick_3[1].SetActive(false);
@@ -54,6 +58,7 @@ public class PalancasManager : MonoBehaviour
             Joy1 = true;
             prefabCompletoJoystick_1[0].SetActive(false);
             prefabCompletoJoystick_1[1].SetActive(true);
+            _completejoysticks.Add(joystick_1);
         }
 
         if (_posJoystick_2.x > _destinoJoystick_2.x && _posJoystick_2.y < _destinoJoystick_2.y && !Joy2)
@@ -61,6 +66,7 @@ public class PalancasManager : MonoBehaviour
             Joy2 = true;
             prefabCompletoJoystick_2[0].SetActive(false);
             prefabCompletoJoystick_2[1].SetActive(true);
+            _completejoysticks.Add(joystick_2);
         }
 
         if (_posJoystick_3.x > _destinoJoystick_3.x && _posJoystick_3.y > _destinoJoystick_3.y && !Joy3)
@@ -68,6 +74,12 @@ public class PalancasManager : MonoBehaviour
             Joy3 = true;
             prefabCompletoJoystick_3[0].SetActive(false);
             prefabCompletoJoystick_3[1].SetActive(true);
+            _completejoysticks.Add(joystick_3);
+        }
+
+        if(_completejoysticks.Count >= 3)
+        {
+            GameManager.instance.OpenDoor(0);
         }
     }
 

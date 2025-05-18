@@ -21,13 +21,19 @@ public class UIManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
 
-        _generalLobbyPanel.SetActive(true);
-        _rotationPanel.SetActive(false);
+        if(_generalLobbyPanel != null)
+        {
+            _generalLobbyPanel.SetActive(true);
+        }
+        if (_rotationPanel != null)
+        {
+            _rotationPanel.SetActive(false);
+        }
     }
 
     public void ChangeToGameScene()
     {
-        SceneChanger.instance.ChangeSceneTo(1);
+        SceneChanger.instance.ChangeSceneTo(2);
     }
 
     public void ActivateRotationPanel()
@@ -60,6 +66,11 @@ public class UIManager : MonoBehaviour
         _playerCode.ReadRotationSettings(rotationSettingSO.rotationSettings._snapTurnBool,
             rotationSettingSO.rotationSettings._continousTurnBool); 
     } 
+
+    public void ChangeToCinematicScene()
+    {
+        SceneChanger.instance.ChangeSceneTo(1);
+    }
 
     public void QuitGame()
     {

@@ -19,6 +19,8 @@ public class PlayerCode : MonoBehaviour
     [SerializeField] protected GameObject rightRay;
     [SerializeField] protected GameObject leftRay;
 
+    [SerializeField] protected GameObject _XROrigin;
+
     #region UnityMethods
 
     private void OnDrawGizmos()
@@ -44,6 +46,15 @@ public class PlayerCode : MonoBehaviour
     {
         rightRay.SetActive(actionPropertyRight.action.ReadValue<float>() > 0.1f);
         leftRay.SetActive(actionPropertyLeft.action.ReadValue<float>() > 0.1f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Reset"))
+        {
+            Debug.Log($"Reset! You hit: {other.gameObject.name}");
+            GameManager.instance.ResetLevel();
+        }
     }
 
     #endregion

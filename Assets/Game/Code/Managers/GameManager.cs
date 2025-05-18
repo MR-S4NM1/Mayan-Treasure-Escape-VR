@@ -1,3 +1,4 @@
+using MayanTreasureEscape.Game;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
         if (instance == null) instance = this;
         _timer = 950.0f;
         _timerCoroutine = StartCoroutine(GameTimer());
-        _totemsDestroyed = new HashSet<GameObject>();
+        _totemsDestroyed = new HashSet<GameObject>(); 
         _brigde.SetActive(true);
         _brigde.GetComponent<Rigidbody>().useGravity = false;
     }
@@ -80,12 +81,18 @@ public class GameManager : MonoBehaviour
         if (_totemsDestroyed.Count >= 2)
         {
             _brigde.GetComponent<Rigidbody>().useGravity = true;
+            OpenDoor(2);
         }
     }
 
     public void OpenDoor(int p_index)
     {
         StartCoroutine(OpenDoorCorroutine(p_index));
+    }
+
+    public void ResetLevel()
+    {
+        SceneChanger.instance.ChangeSceneTo(2);
     }
 
     #endregion
