@@ -39,13 +39,13 @@ public class ManagerPuente : MonoBehaviour
         if (_leverActivation)
         {
 
-            _puentes[0].transform.position = new Vector3(_referencias[0].position.x,
-                _referencias[0].position.y + _wheelPosY, _referencias[0].position.z + _wheelPosX);
+            _puentes[0].transform.position = new Vector3(_referencias[0].position.x + _wheelPosX,
+                _referencias[0].position.y + _wheelPosY, _referencias[0].position.z );
         }
         else
         {
-            _puentes[1].transform.position = new Vector3(_referencias[1].position.x,
-                _referencias[1].position.y + _wheelPosY, _referencias[1].position.z + _wheelPosX);
+            _puentes[1].transform.position = new Vector3(_referencias[1].position.x + _wheelPosX,
+                _referencias[1].position.y + _wheelPosY, _referencias[1].position.z );
         }
     }
 
@@ -65,7 +65,7 @@ public class ManagerPuente : MonoBehaviour
 
     void ValueWheelX(float value)
     {
-        if (value < 1 && value > 0)
+        if (value < 2 && value > -2)
         {
             _wheelPosX = value;
         }
@@ -74,7 +74,7 @@ public class ManagerPuente : MonoBehaviour
 
     void ValueWheelY(float value)
     {
-        if (value < 1 && value > 0)
+        if (value < 2 && value > -2)
         {
             _wheelPosY = value;
         }
