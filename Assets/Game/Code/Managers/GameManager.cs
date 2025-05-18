@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Doors")]
     [SerializeField] protected GameObject[] _doors;
+    [SerializeField] protected GameObject _gate;
 
     #region UnityMethods
     private void Awake()
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        OpenDoor(0);
+
     }
 
     #endregion
@@ -130,6 +131,11 @@ public class GameManager : MonoBehaviour
     protected IEnumerator OpenDoorCorroutine(int p_index)
     {
         Debug.Log($"Index: {p_index}");
+
+        if(p_index == 1)
+        {
+            _gate.gameObject.SetActive(false);
+        }
 
         _doors[p_index].gameObject.GetComponent<Animator>()?.Play("OpenDoor");
 
