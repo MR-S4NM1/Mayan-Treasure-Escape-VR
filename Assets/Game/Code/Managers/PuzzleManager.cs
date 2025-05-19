@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
 public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager Instance;
@@ -11,6 +12,8 @@ public class PuzzleManager : MonoBehaviour
     [Header("Posicionamiento")]
     public Transform gridPos; 
     public float spacing = 1.5f; 
+
+    protected GameManager gameManager;
 
     
     private int[,] solutionGrid = new int[3, 3]
@@ -64,7 +67,7 @@ public class PuzzleManager : MonoBehaviour
 
         if (CheckPuzzleSolved())
         {
-            Debug.Log("¡Puzzle completado! 🎉");
+            GameManager.instance.OpenDoor(1);
         }
     }
 
