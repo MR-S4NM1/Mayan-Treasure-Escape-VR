@@ -5,6 +5,8 @@ using UnityEngine.XR.Content.Interaction;
 
 public class PalancasManager : MonoBehaviour
 {
+    
+
     [SerializeField] XRJoystick joystick_1;
     [SerializeField] XRJoystick joystick_2;
     [SerializeField] XRJoystick joystick_3;
