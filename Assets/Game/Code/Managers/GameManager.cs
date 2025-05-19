@@ -2,6 +2,7 @@ using MayanTreasureEscape.Game;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum GeneralGameStates
@@ -37,20 +38,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] protected GameObject[] _doors;
     [SerializeField] protected GameObject _gate_1, _gate_2;
 
+    [SerializeField] protected TextMeshProUGUI _timerText;
+
     #region UnityMethods
     private void Awake()
     {
         if (instance == null) instance = this;
-        _timer = 950.0f;
-        _timerCoroutine = StartCoroutine(GameTimer());
         _totemsDestroyed = new HashSet<GameObject>(); 
         _brigde.SetActive(true);
         _brigde.GetComponent<Rigidbody>().useGravity = false;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-
+        _timer = 950.0f;
+        _timerText.text = $"Time: {_timer}";
+        _timerCoroutine = StartCoroutine(GameTimer());
     }
 
     #endregion
@@ -130,6 +133,12 @@ public class GameManager : MonoBehaviour
             //UIManager.instance.UpdateTimer(_timer.ToString());
             yield return new WaitForSeconds(1.0f);
             _timer--;
+            _timerText.text = $"Time: {_timer}";
+        }
+
+        if(_timer <= 0.0f)
+        {
+            ResetLevel(); 
         }
     }
 
