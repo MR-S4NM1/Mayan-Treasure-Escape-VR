@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
 
         if(_timer <= 0.0f)
         {
-            ResetLevel(); 
+            SceneChanger.instance.ChangeSceneTo(4);
         }
     }
 
