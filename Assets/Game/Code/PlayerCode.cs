@@ -21,6 +21,8 @@ public class PlayerCode : MonoBehaviour
 
     [SerializeField] protected GameObject _XROrigin;
 
+    protected Transform CheckPointPosition;
+
     #region UnityMethods
 
     private void OnDrawGizmos()
@@ -54,7 +56,10 @@ public class PlayerCode : MonoBehaviour
         {
             Debug.Log($"Reset! You hit: {other.gameObject.name}");
             GameManager.instance.ResetLevel();
+            
         }
+
+        
     }
 
     #endregion

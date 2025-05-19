@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BowTarget
   - Reset
+  - checkPoint
+  - Death
   layers:
   - Default
   - TransparentFX
