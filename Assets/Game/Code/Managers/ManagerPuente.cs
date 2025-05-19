@@ -10,12 +10,13 @@ public class ManagerPuente : MonoBehaviour
     [SerializeField] protected XRKnob _wheelY;
     [SerializeField] protected GameObject[] _puentes;
     [SerializeField] protected Transform[] _referencias;
+    
     private bool _leverActivation;
     protected float _wheelPosX, _lastWheelPosX1, _lastWheelPosX2;
     protected float _wheelPosY, _lastWheelPosY1, _lastWheelPosY2;
     void Start()
     {
-
+        _leverActivation = true;
     }
     private void OnEnable()
     {
@@ -105,4 +106,6 @@ public class ManagerPuente : MonoBehaviour
         _wheelX.value = (float)_lastWheelPosX2;
         _wheelY.value = (float)_lastWheelPosY2;
     }
+
+    
 }

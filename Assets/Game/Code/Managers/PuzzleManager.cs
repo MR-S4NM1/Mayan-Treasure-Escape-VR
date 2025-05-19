@@ -5,6 +5,7 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager Instance;
+    [SerializeField] GameObject missingPiece;
 
     public PuzzlePiece[,] grid = new PuzzlePiece[3, 3]; 
     public Vector2Int emptyTilePos = new Vector2Int(2, 2); 
@@ -67,7 +68,7 @@ public class PuzzleManager : MonoBehaviour
 
         if (CheckPuzzleSolved())
         {
-            GameManager.instance.OpenDoor(1);
+            missingPiece.gameObject.SetActive(true);
         }
     }
 

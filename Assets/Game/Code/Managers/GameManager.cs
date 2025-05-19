@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Doors")]
     [SerializeField] protected GameObject[] _doors;
-    [SerializeField] protected GameObject _gate;
+    [SerializeField] protected GameObject _gate_1, _gate_2;
 
     #region UnityMethods
     private void Awake()
@@ -141,10 +141,14 @@ public class GameManager : MonoBehaviour
 
         if(p_index == 1)
         {
-            _gate.gameObject.SetActive(false);
+            _gate_1.gameObject.SetActive(false);
+        }
+        else if(p_index == 3)
+        {
+            _gate_2.gameObject.SetActive(false);
         }
 
-        _doors[p_index].gameObject.GetComponent<Animator>()?.Play("OpenDoor");
+            _doors[p_index].gameObject.GetComponent<Animator>()?.Play("OpenDoor");
 
         yield return new WaitForSeconds(2.0f);
 

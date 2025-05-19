@@ -1,3 +1,4 @@
+using MayanTreasureEscape.Game;
 using Mr_Sanmi.PuzzleVRGame;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,18 @@ public class PlayerCode : MonoBehaviour
         {
             Debug.Log($"Reset! You hit: {other.gameObject.name}");
             GameManager.instance.ResetLevel();
+            //gameObject.transform.position = CheckPointPosition.position;
             
+        }
+
+        if (other.gameObject.CompareTag("Victoria"))
+        {
+            SceneChanger.instance.ChangeSceneTo(3);
+        }
+
+        if (other.gameObject.CompareTag("checkPoint"))
+        {
+            CheckPointPosition = other.gameObject.transform;
         }
 
         

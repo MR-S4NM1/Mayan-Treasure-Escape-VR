@@ -8,6 +8,11 @@ TagManager:
   - Reset
   - checkPoint
   - Death
+  - PosBola
+  - Bola
+  - Rueda
+  - Victoria
+  - MissingPiece
   layers:
   - Default
   - TransparentFX
